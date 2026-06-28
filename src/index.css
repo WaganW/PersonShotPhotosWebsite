@@ -1,0 +1,213 @@
+﻿/* ===== Reset & Variables ===== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg-primary: #efeff0;
+  --bg-secondary: #eafffd;
+  --bg-card: rgba(255,255,255,0.6);
+  --bg-card-hover: rgba(255,255,255,0.85);
+  --text-primary: #1a1a2e;
+  --text-secondary: rgba(26,26,46,0.65);
+  --text-tertiary: rgba(26,26,46,0.4);
+  --text-muted: rgba(26,26,46,0.25);
+  --accent: #7b6b8e;
+  --accent-dim: rgba(123,107,142,0.12);
+  --accent-hover: #8b7da0;
+  --accent-dark: #5a4d6b;
+  --accent-gradient: linear-gradient(135deg, #7b6b8e, #c9f0ff);
+  --border-subtle: rgba(0,0,0,0.06);
+  --border-hover: rgba(0,0,0,0.12);
+  --glass-bg: rgba(255,255,255,0.5);
+  --glass-border: rgba(0,0,0,0.06);
+  --font-heading: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --max-width: 1700px;
+  --nav-height: 72px;
+  --corner-size: 24px;
+  --aperture-size: 600px;
+}
+
+html { scroll-behavior: smooth; background: var(--bg-primary); }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.015;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(0,0,0,0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.015) 1px, transparent 1px);
+  background-size: 80px 80px;
+}
+
+/* ===== Ambient Drift (used by section ::before pseudo-elements) ===== */
+@keyframes ambientDrift {
+  0%   { background-position: 0% 0%; }
+  25%  { background-position: 100% 30%; }
+  50%  { background-position: 100% 70%; }
+  75%  { background-position: 0% 60%; }
+  100% { background-position: 0% 0%; }
+}
+
+@keyframes ambientPulse {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50%      { opacity: 0.75; transform: scale(1.05); }
+}
+
+::selection { background: var(--accent); color: #fff; }
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--bg-primary); }
+::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #aaa; }
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; height: auto; display: block; }
+ul { list-style: none; }
+
+.section { max-width: var(--max-width); margin: 0 auto; padding: 140px 48px; position: relative; z-index: 1; }
+
+.aperture-decoration {
+  position: absolute;
+  width: var(--aperture-size);
+  height: var(--aperture-size);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.06;
+}
+.aperture-decoration svg { width: 100%; height: 100%; }
+
+/* ===== Section Background ===== */
+.section-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+.section-bg__shader {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.corner-bracket { position: relative; display: inline-block; }
+.corner-bracket::before,
+.corner-bracket::after {
+  content: '';
+  position: absolute;
+  width: var(--corner-size);
+  height: var(--corner-size);
+  border-color: var(--accent);
+  border-style: solid;
+  opacity: 0.3;
+  pointer-events: none;
+}
+.corner-bracket::before { top: -12px; left: -12px; border-width: 1px 0 0 1px; }
+.corner-bracket::after { bottom: -12px; right: -12px; border-width: 0 1px 1px 0; }
+
+.gold-dot {
+  display: inline-block;
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.4;
+  margin: 0 8px;
+  vertical-align: middle;
+}
+.gold-dot--small { width: 3px; height: 3px; margin: 0 6px; opacity: 0.25; }
+
+.section-label {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin-bottom: 20px;
+}
+.section-label::before {
+  content: '';
+  display: inline-block;
+  width: 20px; height: 1px;
+  background: var(--accent);
+  vertical-align: middle;
+  margin-right: 12px;
+  opacity: 0.4;
+}
+
+.section-title {
+  font-family: var(--font-heading);
+  font-size: 3rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 16px;
+  color: var(--text-primary);
+  overflow: visible !important;
+}
+
+.section-subtitle {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  max-width: 480px;
+  line-height: 1.7;
+  font-weight: 300;
+  overflow: visible !important;
+}
+
+.divider { width: 40px; height: 1px; background: var(--accent); margin: 24px 0; opacity: 0.4; }
+
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.25,0.46,0.45,0.94), transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94);
+  position: relative; z-index: 1;
+}
+.scroll-reveal.revealed { opacity: 1; transform: translateY(0); }
+.scroll-reveal-delay-1 { transition-delay: 0.1s; }
+.scroll-reveal-delay-2 { transition-delay: 0.2s; }
+.scroll-reveal-delay-3 { transition-delay: 0.3s; }
+.scroll-reveal-delay-4 { transition-delay: 0.4s; }
+
+.split-parent { display: inline-block; white-space: normal; word-wrap: break-word; }
+.split-char, .split-word { display: inline-block; will-change: transform, opacity; }
+
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 10px;
+}
+
+@media (max-width: 1400px) {
+  .section { padding: 100px 32px; }
+  .section-title { font-size: 2.4rem; }
+  :root { --aperture-size: 400px; }
+}
+@media (max-width: 768px) {
+  .section { padding: 80px 20px; }
+  .section-title { font-size: 2rem; }
+  :root { --aperture-size: 280px; }
+}
